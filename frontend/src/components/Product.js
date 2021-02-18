@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Rating from './Rating';
 
 const Product = (props) => {
@@ -8,15 +9,15 @@ const Product = (props) => {
   return (
     <div>
       <Card className='my-3 p-4 rounded'>
-        <a href={`/product/${item._id}`}>
+        <Link to={`/product/${item._id}`}>
           <Card.Img src={item.image} />
-        </a>
+        </Link>
         <Card.Body>
-          <a href={`/product/${item._id}`}>
+          <Link to={`/product/${item._id}`}>
             <Card.Title>
               <strong>{item.name}</strong>
             </Card.Title>
-          </a>
+          </Link>
           <Card.Text>
             <Rating value={item.rating} text={`${item.rating} reviews`} />
           </Card.Text>
