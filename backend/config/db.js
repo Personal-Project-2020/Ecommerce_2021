@@ -1,16 +1,20 @@
 const mongoose = require('mongoose');
-const MONGO_URL = process.env.MONGO_URL;
+require('dotenv').config();
+const MONGO = process.env.MONGO_URL;
+const colors = require('colors');
 
 const connectDB = async () => {
   try {
-    const connect = await mongoose.connect(MONGO_URL, {
-      useUnifiedTopology: true,
+    const connect = await mongoose.connect(MONGO, {
       useNewUrlParser: true,
+      useUnifiedTopology: true,
       useCreateIndex: true,
     });
-    console.log(`MongoDB is Connected: ${connect.connection.host}`);
+    console.log(
+      `MongoDB is Connected: ${connect.connection.host}`.yellow.underline
+    );
   } catch (error) {
-    console.error(`Error : ${error.message}`);
+    console.error(`Error : ${error.message}`.red.underline.bold);
   }
 };
 module.exports = connectDB;
