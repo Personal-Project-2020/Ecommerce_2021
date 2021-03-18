@@ -6,6 +6,7 @@ import Footer from './components/Footer.js';
 import HomeScreen from './screens/HomeScreen.js';
 import ProductScreen from './screens/ProductScreen.js';
 
+
 const App = () => {
   return (
     <Router className='App'>
