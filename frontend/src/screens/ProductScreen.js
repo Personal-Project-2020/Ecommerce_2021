@@ -1,12 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
+import {
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Card,
+  Button,
+  Form,
+} from 'react-bootstrap';
 import Rating from '../components/Rating.js';
 import { itemProduct } from '../store/actions/productByIdAction.js';
 import Loader from '../components/Loader.js';
 
 const ProductScreen = ({ match }) => {
+  const [qty, setQty] = useState(0);
+
   const dispatch = useDispatch();
   const itemList = useSelector((state) => state.itemProduct);
   useEffect(() => {
@@ -68,6 +78,30 @@ const ProductScreen = ({ match }) => {
                   </Col>
                 </Row>
               </ListGroup.Item>
+              {itemList.productListById.countInStock > 0 && (
+                <ListGroup.Item>
+                  <Row>
+                    <Col> Qty: </Col>
+                    <Col>
+                      <Form.Control
+                        as='select'
+                        value={qty}
+                        onChange={(e) => setQty(e.target.value)}
+                      >
+                        {[
+                          ...Array(
+                            itemList.productListById.countInStock
+                          ).keys(),
+                        ].map((item) => (
+                          <option key={item} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              )}
               <ListGroup.Item>
                 <Row>
                   <Button
