@@ -14,14 +14,19 @@ import Rating from '../components/Rating.js';
 import { itemProduct } from '../store/actions/productByIdAction.js';
 import Loader from '../components/Loader.js';
 
-const ProductScreen = ({ match }) => {
-  const [qty, setQty] = useState(0);
+const ProductScreen = ({ history, match }) => {
+  const [qty, setQty] = useState(1);
 
   const dispatch = useDispatch();
   const itemList = useSelector((state) => state.itemProduct);
   useEffect(() => {
     dispatch(itemProduct(match.params.id));
   }, [dispatch, match]);
+
+  const addToCartHandler = () => {
+    console.log('add to click clicked');
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
+  };
 
   return (
     <>
@@ -93,8 +98,8 @@ const ProductScreen = ({ match }) => {
                             itemList.productListById.countInStock
                           ).keys(),
                         ].map((item) => (
-                          <option key={item} value={item}>
-                            {item}
+                          <option key={item + 1} value={item + 1}>
+                            {item + 1}
                           </option>
                         ))}
                       </Form.Control>
@@ -105,6 +110,7 @@ const ProductScreen = ({ match }) => {
               <ListGroup.Item>
                 <Row>
                   <Button
+                    onClick={addToCartHandler}
                     className='btn-black'
                     type='button'
                     disabled={itemList.productListById.countInStock === 0}
